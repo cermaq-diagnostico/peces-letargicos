@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapeo de Problemas — Cermaq</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --aqua: #0096a0;
+  --aqua-dark: #007880;
+  --aqua-light: #e0f5f6;
+  --aqua-mid: #40b8c0;
+  --deep: #324664;
+  --deep-light: #4a6080;
+  --coral: #fa6e5a;
+  --grey: #d2d2cd;
+  --bg: #f0f1ee;
+  --surface: #ffffff;
+  --surface2: #f7f7f5;
+  --border: #e2e1db;
+  --border2: #d0cfc9;
+  --text: #1a1a1a;
+  --muted: #72716a;
+  --muted2: #a09f99;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--deep);
+  padding: 0 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 12px rgba(50,70,100,0.15);
+}
+
+.header-brand {
+  display: flex; align-items: center; gap: 12px;
+}
+.header-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--aqua-mid);
+}
+.header-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: white; letter-spacing: 0.02em;
+}
+.header-sub {
+  font-size: 12px; color: rgba(255,255,255,0.4);
+  margin-left: 4px;
+}
+
+.header-tag {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 4px 12px;
+}
+
+/* ── HERO STRIP ── */
+.hero-strip {
+  background: var(--deep);
+  padding: 40px 48px 48px;
+  position: relative; overflow: hidden;
+}
+.hero-strip::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse 600px 300px at 90% 50%, rgba(0,150,160,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 300px 200px at 10% 80%, rgba(250,110,90,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-strip-inner {
+  max-width: 1100px; margin: 0 auto;
+  position: relative; z-index: 1;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 40px;
+}
+.hero-left { flex: 1; }
+.hero-eyebrow {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--aqua-mid);
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+}
+.hero-eyebrow::before {
+  content: ''; width: 20px; height: 1px; background: var(--aqua-mid); opacity: 0.6;
+}
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800; color: white;
+  line-height: 1.05; letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+.hero-title span { color: var(--aqua-mid); }
+.hero-desc {
+  font-size: 14px; font-weight: 300;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7; max-width: 460px;
+}
+
+.hero-alert {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: rgba(250,110,90,0.1);
+  border: 1px solid rgba(250,110,90,0.2);
+  border-radius: 12px; padding: 14px 18px;
+  font-size: 13px; color: rgba(255,255,255,0.8);
+  line-height: 1.55; max-width: 320px; flex-shrink: 0;
+  align-self: flex-start; margin-top: 8px;
+}
+.hero-alert-icon { color: var(--coral); flex-shrink: 0; font-size: 16px; margin-top: 1px; }
+.hero-alert strong { color: var(--coral); font-weight: 500; }
+
+/* ── MAIN CONTENT ── */
+.main-content {
+  max-width: 1100px; margin: 0 auto;
+  padding: 40px 48px 100px;
+}
+
+/* ── SECTION HEADER ── */
+.section-header {
+  margin-bottom: 28px;
+}
+.section-tag {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--aqua);
+  margin-bottom: 6px;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px; font-weight: 700;
+  color: var(--deep); margin-bottom: 4px;
+}
+.section-desc {
+  font-size: 13px; color: var(--muted); line-height: 1.6;
+}
+
+/* ── TIMELINE ── */
+.timeline-wrap {
+  position: relative; margin-bottom: 40px;
+}
+
+.timeline-track {
+  position: absolute; top: 26px; left: 26px; right: 26px;
+  height: 2px; background: var(--border2); z-index: 0;
+  border-radius: 1px;
+}
+.timeline-fill {
+  height: 2px; background: var(--aqua);
+  border-radius: 1px; transition: width 0.5s ease; width: 0%;
+}
+
+.timeline-stages {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  position: relative; z-index: 1;
+}
+
+.stage-card {
+  display: flex; flex-direction: column; align-items: center;
+  cursor: pointer; transition: all 0.2s;
+  padding: 0 4px;
+}
+
+.stage-node {
+  width: 52px; height: 52px; border-radius: 50%;
+  border: 2px solid var(--border2);
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
+  color: var(--muted2); margin-bottom: 10px;
+  transition: all 0.2s; position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.stage-card:hover .stage-node {
+  border-color: var(--aqua); color: var(--aqua);
+  background: var(--aqua-light);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,150,160,0.15);
+}
+
+.stage-card.active .stage-node {
+  border-color: var(--aqua); background: var(--aqua);
+  color: white; transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,150,160,0.3);
+}
+
+.stage-card.has-notes .stage-node::after {
+  content: attr(data-count);
+  position: absolute; top: -5px; right: -5px;
+  min-width: 20px; height: 20px; border-radius: 10px;
+  background: var(--coral); color: white;
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; padding: 0 4px;
+  border: 2px solid var(--bg);
+}
+
+.stage-name {
+  font-size: 11px; font-weight: 500; text-align: center;
+  color: var(--muted); line-height: 1.3;
+  transition: color 0.2s; max-width: 90px;
+}
+.stage-card:hover .stage-name { color: var(--aqua-dark); }
+.stage-card.active .stage-name { color: var(--aqua); font-weight: 600; }
+
+.stage-badge {
+  font-size: 10px; color: var(--coral); margin-top: 4px;
+  font-weight: 600; opacity: 0; transition: opacity 0.2s;
+  font-family: 'Syne', sans-serif;
+}
+.stage-card.has-notes .stage-badge { opacity: 1; }
+
+/* ── STAGE PANEL ── */
+.stage-panel {
+  margin-bottom: 32px;
+  animation: panelIn 0.25s ease;
+}
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.panel-inner {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--aqua);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.panel-header {
+  background: linear-gradient(135deg, var(--deep) 0%, var(--deep-light) 100%);
+  padding: 20px 28px;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 20px;
+}
+.panel-num {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--aqua-mid); margin-bottom: 4px;
+}
+.panel-title {
+  font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700;
+  color: white; margin-bottom: 4px;
+}
+.panel-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.55; max-width: 500px; }
+
+.panel-close {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.6); font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.15s; line-height: 1;
+}
+.panel-close:hover { background: rgba(255,255,255,0.2); color: white; }
+
+.notes-body { padding: 20px 28px 24px; }
+
+.notes-label {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted2); margin-bottom: 14px;
+}
+
+.notes-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+
+.note-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 14px;
+  animation: noteIn 0.18s ease;
+}
+@keyframes noteIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.note-num {
+  width: 22px; height: 22px; border-radius: 6px;
+  background: var(--aqua-light);
+  color: var(--aqua-dark); font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-family: 'Syne', sans-serif; margin-top: 1px;
+}
+
+.note-text { flex: 1; font-size: 14px; color: var(--text); line-height: 1.5; }
+
+.note-delete {
+  background: none; border: none; color: var(--muted2);
+  cursor: pointer; font-size: 16px; padding: 0 2px;
+  transition: color 0.15s; flex-shrink: 0; line-height: 1;
+}
+.note-delete:hover { color: var(--coral); }
+
+.add-wrap {
+  display: flex; gap: 8px; align-items: flex-end;
+}
+.add-field {
+  flex: 1; background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 12px 16px;
+  font-size: 14px; font-family: 'DM Sans', sans-serif;
+  color: var(--text); outline: none; resize: none;
+  min-height: 52px; max-height: 120px;
+  transition: border-color 0.2s; line-height: 1.5;
+}
+.add-field::placeholder { color: var(--muted2); }
+.add-field:focus { border-color: var(--aqua); background: var(--aqua-light); }
+
+.add-btn {
+  background: var(--aqua); border: none; border-radius: 10px;
+  width: 46px; height: 46px; cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; color: white; font-size: 22px; font-weight: 300;
+}
+.add-btn:hover { background: var(--aqua-dark); transform: scale(1.05); }
+
+.add-hint {
+  font-size: 11px; color: var(--muted2); margin-top: 6px;
+}
+
+.empty-state {
+  text-align: center; padding: 24px 16px;
+  color: var(--muted2); font-size: 13px; line-height: 1.6;
+}
+.empty-icon { font-size: 24px; margin-bottom: 8px; opacity: 0.5; }
+
+/* ── SUBMIT CARD ── */
+.submit-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px 32px;
+  display: flex; align-items: flex-start;
+  gap: 32px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.submit-left { flex: 1; }
+.submit-title {
+  font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700;
+  color: var(--deep); margin-bottom: 20px;
+}
+
+.cargo-wrap { margin-bottom: 20px; }
+.cargo-label {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+}
+.cargo-input {
+  width: 100%; background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 12px 16px;
+  font-size: 14px; font-family: 'DM Sans', sans-serif;
+  color: var(--text); outline: none;
+  transition: border-color 0.2s;
+}
+.cargo-input:focus { border-color: var(--aqua); }
+.cargo-input.error { border-color: var(--coral); }
+.cargo-input::placeholder { color: var(--muted2); }
+
+.submit-right {
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  flex-shrink: 0;
+}
+
+.counter-box {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px 24px;
+  text-align: center;
+}
+.counter-num {
+  font-family: 'Syne', sans-serif; font-size: 40px; font-weight: 800;
+  color: var(--aqua); line-height: 1;
+}
+.counter-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+.btn-submit {
+  background: var(--deep); border: none; border-radius: 12px;
+  padding: 14px 32px; font-size: 14px; font-weight: 600;
+  font-family: 'Syne', sans-serif; letter-spacing: 0.04em;
+  color: white; cursor: pointer; transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-submit:hover { background: var(--aqua); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,150,160,0.25); }
+.btn-submit:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; background: var(--deep); }
+
+.val-error {
+  font-size: 12px; color: var(--coral); margin-top: 6px; display: none;
+}
+.val-error.show { display: block; }
+
+/* ── THANKS ── */
+#screen-thanks {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 32px; text-align: center;
+}
+
+.thanks-check {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--aqua-light); border: 2px solid var(--aqua);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; color: var(--aqua); margin: 0 auto 24px;
+  animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes popIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.thanks-title {
+  font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800;
+  color: var(--deep); margin-bottom: 10px; letter-spacing: -0.01em;
+}
+.thanks-sub {
+  font-size: 15px; color: var(--muted); max-width: 380px;
+  line-height: 1.7; margin: 0 auto 32px;
+}
+.thanks-summary {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px 32px;
+  max-width: 460px; width: 100%; text-align: left;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+.thanks-summary-title {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--aqua); margin-bottom: 16px;
+}
+.thanks-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.thanks-row:last-child { border-bottom: none; }
+.thanks-row-name { color: var(--text); }
+.thanks-row-count { color: var(--aqua); font-weight: 600; font-family: 'Syne', sans-serif; }
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--deep); padding: 14px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-name { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; }
+.footer-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--aqua-mid); display: inline-block; margin-right: 8px; }
+
+@media(max-width:900px) {
+  .header, .hero-strip { padding-left: 24px; padding-right: 24px; }
+  .main-content { padding: 28px 24px 80px; }
+  .timeline-stages { grid-template-columns: repeat(3,1fr); }
+  .hero-strip-inner { flex-direction: column; }
+  .hero-alert { max-width: 100%; }
+  .submit-card { flex-direction: column; }
+  .submit-right { flex-direction: row; align-items: center; }
+  .footer { padding-left: 24px; padding-right: 24px; }
+}
+@media(max-width:500px) {
+  .timeline-stages { grid-template-columns: repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ SCREEN: MAIN ══ -->
+<div id="screen-main">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-brand">
+      <div class="header-dot"></div>
+      <div class="header-title">Cermaq Chile <span class="header-sub">· Diagnóstico operacional</span></div>
+    </div>
+    <div class="header-tag">Peces letárgicos en acopio</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero-strip">
+    <div class="hero-strip-inner">
+      <div class="hero-left">
+        <div class="hero-eyebrow">Metodología ágil · Mapeo colaborativo</div>
+        <h1 class="hero-title">Mapeo de<br><span>problemas</span></h1>
+        <p class="hero-desc">Selecciona una etapa del proceso de cosecha e identifica los problemas que crees que están generando peces letárgicos en acopio. Puedes agregar tantos problemas como quieras.</p>
+      </div>
+      <div class="hero-alert">
+        <span class="hero-alert-icon">◈</span>
+        <span><strong>Hablamos de problemas, no de soluciones.</strong> Describe qué está fallando — no lo que se debería hacer para arreglarlo.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-content">
+
+    <!-- TIMELINE -->
+    <div class="section-header">
+      <div class="section-tag">Proceso de cosecha</div>
+      <div class="section-title">¿En qué etapa está el problema?</div>
+      <div class="section-desc">Haz clic en una etapa para abrirla y registrar los problemas que identificas en ella.</div>
+    </div>
+
+    <div class="timeline-wrap">
+      <div class="timeline-track"><div class="timeline-fill" id="timelineFill"></div></div>
+      <div class="timeline-stages" id="timelineStages"></div>
+    </div>
+
+    <!-- STAGE PANEL -->
+    <div id="stagePanel" style="display:none;">
+      <div class="stage-panel">
+        <div class="panel-inner">
+          <div class="panel-header">
+            <div>
+              <div class="panel-num" id="panelNum">Etapa 1</div>
+              <div class="panel-title" id="panelTitle">—</div>
+              <div class="panel-desc" id="panelDesc">—</div>
+            </div>
+            <button class="panel-close" onclick="closePanel()">×</button>
+          </div>
+          <div class="notes-body">
+            <div class="notes-label">Problemas identificados en esta etapa</div>
+            <div class="notes-list" id="notesList"></div>
+            <div class="add-wrap">
+              <textarea class="add-field" id="noteInput" placeholder="Describe un problema que ocurre en esta etapa..." rows="2" onkeydown="handleKey(event)"></textarea>
+              <button class="add-btn" onclick="addNote()">+</button>
+            </div>
+            <div class="add-hint">Presiona Enter para agregar · Shift+Enter para nueva línea</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-card" id="submitCard">
+      <div class="submit-left">
+        <div class="submit-title">¿Terminaste de mapear?</div>
+        <div class="cargo-wrap">
+          <div class="cargo-label">Tu nombre y cargo <span style="color:var(--coral)">*</span></div>
+          <input type="text" class="cargo-input" id="cargoInput" placeholder="Ej: Juan Pérez — Jefe de Centro, Puerto Natales">
+          <div class="val-error" id="cargoError">Por favor ingresa tu nombre y cargo antes de enviar.</div>
+        </div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;">
+          Cuando hayas registrado todos los problemas que identificas, ingresa tu cargo y envía tu diagnóstico al equipo.
+        </div>
+      </div>
+      <div class="submit-right">
+        <div class="counter-box">
+          <div class="counter-num" id="totalCount">0</div>
+          <div class="counter-label">problemas registrados</div>
+        </div>
+        <button class="btn-submit" id="submitBtn" onclick="submitAll()">
+          Enviar diagnóstico →
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span class="footer-name"><span class="footer-dot"></span>CERMAQ Chile</span>
+    <span style="font-size:11px;color:rgba(255,255,255,0.25);">Diagnóstico interno · Confidencial</span>
+  </div>
+</div>
+
+<!-- ══ SCREEN: THANKS ══ -->
+<div id="screen-thanks" style="display:none;">
+  <div class="thanks-check">✓</div>
+  <h2 class="thanks-title">¡Diagnóstico enviado!</h2>
+  <p class="thanks-sub">Tus problemas han sido registrados. Gracias por contribuir al mapeo del equipo.</p>
+  <div class="thanks-summary">
+    <div class="thanks-summary-title">Resumen de tu aporte</div>
+    <div id="thanksSummary"></div>
+  </div>
+</div>
+
+<script>
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwt1V-9_-CVqIIA5jAj5dtOfI-p2g-V5ZRoNyz6043zjSXVEVSH_wJpCSfce8D93FZV/exec';
+
+const ETAPAS = [
+  { num:1, name:'Centro de cultivo',  desc:'Condición del pez antes de la cosecha: salud, ayuno, estrés acumulado y ambiente en jaulas.' },
+  { num:2, name:'Manejo de cosecha',  desc:'Proceso de hacinamiento en lance, manejo de redes y transferencia al wellboat.' },
+  { num:3, name:'Navegación',         desc:'Traslado en bodega del wellboat: densidad, oxigenación y tiempo en tránsito.' },
+  { num:4, name:'Descarga en acopio', desc:'Bombeo desde el wellboat al acopio: velocidad, tiempos y condiciones de transferencia.' },
+  { num:5, name:'Estadía en acopio',  desc:'Permanencia en acopio: tiempo de espera, densidad y parámetros ambientales.' },
+  { num:6, name:'Bombeo a planta',    desc:'Lances finales hacia planta: intervenciones, velocidad y condición de ingreso.' }
+];
+
+const notes = ETAPAS.map(() => []);
+let activeStage = null;
+
+// ── BUILD TIMELINE ──
+function buildTimeline() {
+  const c = document.getElementById('timelineStages');
+  c.innerHTML = '';
+  ETAPAS.forEach((e, i) => {
+    const card = document.createElement('div');
+    card.className = 'stage-card';
+    card.id = 'stage_' + i;
+    card.onclick = () => openStage(i);
+    card.innerHTML = `
+      <div class="stage-node" id="node_${i}" data-count="0">${e.num}</div>
+      <div class="stage-name">${e.name}</div>
+      <div class="stage-badge" id="badge_${i}">0 problemas</div>`;
+    c.appendChild(card);
+  });
+}
+
+// ── OPEN STAGE ──
+function openStage(idx) {
+  activeStage = idx;
+  const e = ETAPAS[idx];
+  document.getElementById('panelNum').textContent = `Etapa ${e.num} de ${ETAPAS.length}`;
+  document.getElementById('panelTitle').textContent = e.name;
+  document.getElementById('panelDesc').textContent = e.desc;
+
+  document.querySelectorAll('.stage-card').forEach((c, i) => c.classList.toggle('active', i === idx));
+  renderNotes();
+
+  const panel = document.getElementById('stagePanel');
+  panel.style.display = 'block';
+  document.getElementById('noteInput').value = '';
+  setTimeout(() => {
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    document.getElementById('noteInput').focus();
+  }, 60);
+}
+
+function closePanel() {
+  document.getElementById('stagePanel').style.display = 'none';
+  document.querySelectorAll('.stage-card').forEach(c => c.classList.remove('active'));
+  activeStage = null;
+}
+
+// ── RENDER NOTES ──
+function renderNotes() {
+  const list = document.getElementById('notesList');
+  const arr = notes[activeStage];
+  if (arr.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">💬</div>Sin problemas registrados aún.<br>Escribe el primero abajo.</div>`;
+    return;
+  }
+  list.innerHTML = arr.map((n, ni) => `
+    <div class="note-item">
+      <div class="note-num">${ni + 1}</div>
+      <div class="note-text">${esc(n)}</div>
+      <button class="note-delete" onclick="deleteNote(${ni})">×</button>
+    </div>`).join('');
+}
+
+function addNote() {
+  if (activeStage === null) return;
+  const input = document.getElementById('noteInput');
+  const text = input.value.trim();
+  if (!text) return;
+  notes[activeStage].push(text);
+  input.value = '';
+  input.focus();
+  renderNotes();
+  updateStage(activeStage);
+  updateCounter();
+}
+
+function deleteNote(ni) {
+  notes[activeStage].splice(ni, 1);
+  renderNotes();
+  updateStage(activeStage);
+  updateCounter();
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); addNote(); }
+}
+
+function updateStage(idx) {
+  const count = notes[idx].length;
+  const node = document.getElementById('node_' + idx);
+  const badge = document.getElementById('badge_' + idx);
+  const card = document.getElementById('stage_' + idx);
+  node.dataset.count = count;
+  badge.textContent = count + (count === 1 ? ' problema' : ' problemas');
+  card.classList.toggle('has-notes', count > 0);
+  const filled = notes.filter(n => n.length > 0).length;
+  document.getElementById('timelineFill').style.width = `${(filled / ETAPAS.length) * 100}%`;
+}
+
+function updateCounter() {
+  const total = notes.reduce((s, n) => s + n.length, 0);
+  document.getElementById('totalCount').textContent = total;
+}
+
+function esc(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── SUBMIT ──
+async function submitAll() {
+  const cargo = document.getElementById('cargoInput').value.trim();
+  if (!cargo) {
+    document.getElementById('cargoInput').classList.add('error');
+    document.getElementById('cargoError').classList.add('show');
+    document.getElementById('cargoInput').focus();
+    return;
+  }
+  document.getElementById('cargoInput').classList.remove('error');
+  document.getElementById('cargoError').classList.remove('show');
+
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+  const params = new URLSearchParams();
+  params.append('timestamp', new Date().toISOString());
+  params.append('nombre', cargo);
+  params.append('total', notes.reduce((s, n) => s + n.length, 0));
+
+  ETAPAS.forEach((e, i) => {
+    params.append(`etapa_${i+1}_nombre`, e.name);
+    params.append(`etapa_${i+1}_total`, notes[i].length);
+    notes[i].forEach((note, ni) => {
+      params.append(`etapa_${i+1}_p${ni+1}`, note);
+    });
+  });
+
+  fetch(SHEETS_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' }).catch(() => {});
+
+  // Thanks summary
+  document.getElementById('thanksSummary').innerHTML =
+    ETAPAS.filter((e, i) => notes[i].length > 0).map((e, _, arr) => {
+      const i = ETAPAS.indexOf(e);
+      return `<div class="thanks-row">
+        <span class="thanks-row-name">${e.name}</span>
+        <span class="thanks-row-count">${notes[i].length} problema${notes[i].length !== 1 ? 's' : ''}</span>
+      </div>`;
+    }).join('') || '<div style="font-size:13px;color:var(--muted)">Sin problemas registrados.</div>';
+
+  document.getElementById('screen-main').style.display = 'none';
+  document.getElementById('screen-thanks').style.display = 'flex';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildTimeline();
+</script>
+</body>
+</html>
