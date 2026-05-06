@@ -540,12 +540,13 @@ body {
             <div class="notes-list" id="notesList"></div>
             <div class="add-wrap">
               <textarea class="add-field" id="noteInput" placeholder="Describe un problema que ocurre en esta etapa..." rows="2" onkeydown="handleKey(event)"></textarea>
-              <button class="add-btn" onclick="addNote()">+</button>
+              <button class="add-btn" onclick="addNote()" style="width:auto;padding:0 18px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;letter-spacing:0.01em;">+ Agregar</button>
             </div>
             <div class="add-hint">Presiona Enter para agregar · Shift+Enter para nueva línea</div>
+            <div id="valNextStage" style="display:none;font-size:12px;color:var(--coral);margin-top:8px;padding:8px 12px;background:#fff3f2;border-radius:8px;border:1px solid rgba(250,110,90,0.2);">Debes registrar al menos un problema en esta etapa antes de continuar.</div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
               <button onclick="prevStage()" id="btnPrevStage" style="background:none;border:1px solid var(--border);border-radius:10px;padding:10px 20px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--muted);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--deep)';this.style.color='var(--deep)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">← Anterior</button>
-              <button onclick="nextStage()" id="btnNextStage" style="background:var(--aqua);border:none;border-radius:10px;padding:10px 24px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;color:white;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--aqua-dark)'" onmouseout="this.style.background='var(--aqua)'">Siguiente etapa →</button>
+              <button onclick="nextStageValidated()" id="btnNextStage" style="background:var(--aqua);border:none;border-radius:10px;padding:10px 24px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;color:white;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--aqua-dark)'" onmouseout="this.style.background='var(--aqua)'">Siguiente etapa →</button>
             </div>
           </div>
         </div>
@@ -715,6 +716,7 @@ function addNote() {
   notes[activeStage].push(text);
   input.value = '';
   input.focus();
+  document.getElementById('valNextStage').style.display = 'none';
   renderNotes();
   updateStage(activeStage);
   updateCounter();
@@ -725,6 +727,16 @@ function deleteNote(ni) {
   renderNotes();
   updateStage(activeStage);
   updateCounter();
+}
+
+function nextStageValidated() {
+  if (activeStage === null) return;
+  if (notes[activeStage].length === 0) {
+    document.getElementById('valNextStage').style.display = 'block';
+    return;
+  }
+  document.getElementById('valNextStage').style.display = 'none';
+  nextStage();
 }
 
 function nextStage() {
