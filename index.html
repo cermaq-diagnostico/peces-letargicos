@@ -101,9 +101,9 @@ body {
 }
 .hero-title {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 800; color: white;
-  line-height: 1.05; letter-spacing: -0.02em;
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 700; color: white;
+  line-height: 1.08; letter-spacing: -0.02em;
   margin-bottom: 14px;
 }
 .hero-title span { color: var(--aqua-mid); }
@@ -166,7 +166,7 @@ body {
 
 .timeline-stages {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 12px;
   position: relative; z-index: 1;
 }
@@ -462,15 +462,15 @@ body {
 @media(max-width:900px) {
   .header, .hero-strip { padding-left: 24px; padding-right: 24px; }
   .main-content { padding: 28px 24px 80px; }
-  .timeline-stages { grid-template-columns: repeat(3,1fr); }
+  .timeline-stages { grid-template-columns: repeat(7, minmax(60px, 1fr)); overflow-x: auto; }
   .hero-strip-inner { flex-direction: column; }
   .hero-alert { max-width: 100%; }
-  .submit-card { flex-direction: column; }
-  .submit-right { flex-direction: row; align-items: center; }
   .footer { padding-left: 24px; padding-right: 24px; }
 }
 @media(max-width:500px) {
-  .timeline-stages { grid-template-columns: repeat(2,1fr); }
+  .timeline-stages { grid-template-columns: repeat(7, minmax(52px, 1fr)); gap: 6px; }
+  .stage-node { width: 42px; height: 42px; font-size: 13px; }
+  .stage-name { font-size: 10px; }
 }
 </style>
 </head>
@@ -538,37 +538,78 @@ body {
               <button class="add-btn" onclick="addNote()">+</button>
             </div>
             <div class="add-hint">Presiona Enter para agregar · Shift+Enter para nueva línea</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+              <button onclick="prevStage()" id="btnPrevStage" style="background:none;border:1px solid var(--border);border-radius:10px;padding:10px 20px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--muted);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--deep)';this.style.color='var(--deep)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">← Anterior</button>
+              <button onclick="nextStage()" id="btnNextStage" style="background:var(--aqua);border:none;border-radius:10px;padding:10px 24px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;color:white;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--aqua-dark)'" onmouseout="this.style.background='var(--aqua)'">Siguiente etapa →</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SUBMIT -->
-    <div class="submit-card" id="submitCard">
-      <div class="submit-left">
-        <div class="submit-title">¿Terminaste de mapear?</div>
-        <div class="cargo-wrap">
-          <div class="cargo-label">Tu cargo <span style="color:var(--coral)">*</span></div>
-          <input type="text" class="cargo-input" id="cargoInput" placeholder="Ej: Jefe de Centro, Puerto Natales">
-          <div class="val-error" id="cargoError">Por favor ingresa tu nombre y cargo antes de enviar.</div>
+    <!-- SIGUIENTE BTN -->
+    <div style="display:flex;justify-content:flex-end;margin-bottom:32px;">
+      <div style="display:flex;align-items:center;gap:20px;">
+        <div style="text-align:right;">
+          <div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--aqua);" id="totalCount">0</div>
+          <div style="font-size:11px;color:var(--muted);">problemas registrados</div>
         </div>
-        <div style="font-size:13px;color:var(--muted);line-height:1.6;">
-          Cuando hayas registrado todos los problemas que identificas, ingresa tu cargo y envía tu diagnóstico al equipo.
-        </div>
-      </div>
-      <div class="submit-right">
-        <div class="counter-box">
-          <div class="counter-num" id="totalCount">0</div>
-          <div class="counter-label">problemas registrados</div>
-        </div>
-        <button class="btn-submit" id="submitBtn" onclick="submitAll()">
-          Enviar diagnóstico →
+        <button onclick="irACierre()" style="background:var(--deep);border:none;border-radius:12px;padding:16px 36px;font-size:15px;font-weight:600;font-family:'Syne',sans-serif;letter-spacing:0.04em;color:white;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--aqua)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--deep)';this.style.transform='none'">
+          Siguiente →
         </button>
       </div>
     </div>
 
   </div>
+  <div class="footer">
+    <span class="footer-name"><span class="footer-dot"></span>CERMAQ Chile</span>
+    <span style="font-size:11px;color:rgba(255,255,255,0.25);">Diagnóstico interno · Confidencial</span>
+  </div>
+</div>
 
+<!-- ══ SCREEN: CIERRE ══ -->
+<div id="screen-cierre" style="display:none;">
+  <div class="header">
+    <div class="header-brand">
+      <div class="header-dot"></div>
+      <div class="header-title">Cermaq Chile <span class="header-sub">· Diagnóstico operacional</span></div>
+    </div>
+    <div class="header-tag">Peces Letárgicos</div>
+  </div>
+  <div style="max-width:600px;margin:0 auto;padding:60px 32px 80px;">
+    <div style="font-size:10px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--aqua);margin-bottom:8px;">Último paso</div>
+    <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:700;color:var(--deep);margin-bottom:8px;letter-spacing:-0.01em;">Identifícate</div>
+    <div style="font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:36px;">Ingresa tu nombre y cargo para contextualizar tu diagnóstico dentro del análisis del equipo.</div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 32px;box-shadow:0 4px 24px rgba(0,0,0,0.06);margin-bottom:24px;">
+      <div style="margin-bottom:20px;">
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Tu nombre <span style="color:var(--coral)">*</span></div>
+        <input type="text" id="nombreInput" placeholder="Ej: Juan Pérez" style="width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--aqua)'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Tu cargo <span style="color:var(--coral)">*</span></div>
+        <input type="text" id="cargoInput" placeholder="Ej: Jefe de Centro, Puerto Natales" style="width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--aqua)'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+      <div id="cargoError" style="display:none;font-size:12px;color:var(--coral);margin-top:8px;">Por favor ingresa tu nombre y cargo antes de enviar.</div>
+    </div>
+
+    <!-- Resumen -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 28px;margin-bottom:28px;box-shadow:0 2px 12px rgba(0,0,0,0.04);">
+      <div style="font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--aqua);margin-bottom:14px;">Tu diagnóstico</div>
+      <div id="cierreResumen"></div>
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:13px;color:var(--muted);">Total problemas registrados</span>
+        <span style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--aqua);" id="cierreTotalCount">0</span>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <button onclick="volverAMapeo()" style="background:none;border:1px solid var(--border);border-radius:10px;padding:12px 24px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--muted);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--deep)';this.style.color='var(--deep)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">← Volver al mapeo</button>
+      <button onclick="submitAll()" id="submitBtn" style="background:var(--deep);border:none;border-radius:12px;padding:14px 36px;font-size:15px;font-weight:600;font-family:'Syne',sans-serif;letter-spacing:0.04em;color:white;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--aqua)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--deep)';this.style.transform='none'">
+        Enviar diagnóstico →
+      </button>
+    </div>
+  </div>
   <div class="footer">
     <span class="footer-name"><span class="footer-dot"></span>CERMAQ Chile</span>
     <span style="font-size:11px;color:rgba(255,255,255,0.25);">Diagnóstico interno · Confidencial</span>
@@ -595,7 +636,8 @@ const ETAPAS = [
   { num:3, name:'Navegación',         desc:'Traslado en bodega del wellboat: densidad, oxigenación y tiempo en tránsito.' },
   { num:4, name:'Descarga en acopio', desc:'Bombeo desde el wellboat al acopio: velocidad, tiempos y condiciones de transferencia.' },
   { num:5, name:'Estadía en acopio',  desc:'Permanencia en acopio: tiempo de espera, densidad y parámetros ambientales.' },
-  { num:6, name:'Bombeo a planta',    desc:'Lances finales hacia planta: intervenciones, velocidad y condición de ingreso.' }
+  { num:6, name:'Bombeo a planta',    desc:'Lances finales hacia planta: intervenciones, velocidad y condición de ingreso.' },
+  { num:7, name:'Planta de proceso',  desc:'Recepción y procesamiento en planta: condición de ingreso del pez, criterios de clasificación y descarte.' }
 ];
 
 const notes = ETAPAS.map(() => []);
@@ -680,6 +722,18 @@ function deleteNote(ni) {
   updateCounter();
 }
 
+function nextStage() {
+  if (activeStage === null) return;
+  if (activeStage < ETAPAS.length - 1) openStage(activeStage + 1);
+  else closePanel();
+}
+
+function prevStage() {
+  if (activeStage === null) return;
+  if (activeStage > 0) openStage(activeStage - 1);
+  else closePanel();
+}
+
 function handleKey(e) {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); addNote(); }
 }
@@ -705,15 +759,40 @@ function esc(t) {
   return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+function irACierre() {
+  const total = notes.reduce((s, n) => s + n.length, 0);
+  document.getElementById('cierreTotalCount').textContent = total;
+  document.getElementById('cierreResumen').innerHTML =
+    ETAPAS.filter((e, i) => notes[i].length > 0).map((e) => {
+      const i = ETAPAS.indexOf(e);
+      return `<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);">
+        <span style="font-size:13px;color:var(--text);">${e.name}</span>
+        <span style="font-size:12px;font-weight:600;color:var(--aqua);font-family:'Syne',sans-serif;">${notes[i].length} problema${notes[i].length !== 1 ? 's' : ''}</span>
+      </div>`;
+    }).join('') || '<div style="font-size:13px;color:var(--muted);padding:8px 0;">Sin problemas registrados aún.</div>';
+
+  document.getElementById('screen-main').style.display = 'none';
+  document.getElementById('screen-cierre').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function volverAMapeo() {
+  document.getElementById('screen-cierre').style.display = 'none';
+  document.getElementById('screen-main').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 // ── SUBMIT ──
 async function submitAll() {
+  const nombre = document.getElementById('nombreInput').value.trim();
   const cargo = document.getElementById('cargoInput').value.trim();
-  if (!cargo) {
-    document.getElementById('cargoInput').classList.add('error');
+  if (!nombre || !cargo) {
+    document.getElementById('nombreInput').classList.toggle('error', !nombre);
+    document.getElementById('cargoInput').classList.toggle('error', !cargo);
     document.getElementById('cargoError').classList.add('show');
-    document.getElementById('cargoInput').focus();
     return;
   }
+  document.getElementById('nombreInput').classList.remove('error');
   document.getElementById('cargoInput').classList.remove('error');
   document.getElementById('cargoError').classList.remove('show');
 
@@ -723,7 +802,8 @@ async function submitAll() {
 
   const params = new URLSearchParams();
   params.append('timestamp', new Date().toISOString());
-  params.append('nombre', cargo);
+  params.append('nombre', nombre);
+  params.append('cargo', cargo);
   params.append('total', notes.reduce((s, n) => s + n.length, 0));
 
   ETAPAS.forEach((e, i) => {
@@ -736,9 +816,8 @@ async function submitAll() {
 
   fetch(SHEETS_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' }).catch(() => {});
 
-  // Thanks summary
   document.getElementById('thanksSummary').innerHTML =
-    ETAPAS.filter((e, i) => notes[i].length > 0).map((e, _, arr) => {
+    ETAPAS.filter((e, i) => notes[i].length > 0).map((e) => {
       const i = ETAPAS.indexOf(e);
       return `<div class="thanks-row">
         <span class="thanks-row-name">${e.name}</span>
